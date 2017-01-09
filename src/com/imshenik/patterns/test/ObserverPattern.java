@@ -12,8 +12,8 @@ public class ObserverPattern {
 
 		Meteostation station = new Meteostation();
 		station.addObserver(co);
-		station.addObserver(co);
-		station.addObserver(co);
+		station.addObserver(new ConsoleObserver());
+		station.addObserver(new ConsoleObserver());
 
 		for (int i = 0; i < 3; i++) {
 			station.setMeasurements(i * 3, i * 33);
@@ -32,56 +32,56 @@ public class ObserverPattern {
 	}
 }
 
-	class Meteostation implements Observed {
+class Meteostation implements Observed {
 
-		int temperature;
-		int pressure;
+	int temperature;
+	int pressure;
 
-		public void setMeasurements(int t, int p) {
-			temperature = t;
-			pressure = p;
-			notifyObservers();
-		}
+	public void setMeasurements(int t, int p) {
+		temperature = t;
+		pressure = p;
+		notifyObservers();
+	}
 
-		List<Observer> observers = new ArrayList<>();
+	List<Observer> observers = new ArrayList<>();
 
-		@Override
-		public void addObserver(Observer o) {
-			observers.add(o);
-
-		}
-
-		@Override
-		public void removeObserver(Observer o) {
-			observers.remove(o);
-
-		}
-
-		public void removeObserver(int i) {
-			observers.remove(i);
-
-		}
-
-		@Override
-		public void notifyObservers() {
-			for (Observer o : observers) {
-				o.handleEvent(temperature, pressure);
-			}
-		}
+	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
 
 	}
 
-	interface Observed {
-		void addObserver(Observer o);
+	@Override
+	public void removeObserver(Observer o) {
+		observers.remove(o);
 
-		void removeObserver(Observer o);
-
-		void notifyObservers();
 	}
 
-	interface Observer {
-		void handleEvent(int temp, int presser);
+	public void removeObserver(int i) {
+		observers.remove(i);
+
 	}
+
+	@Override
+	public void notifyObservers() {
+		for (Observer o : observers) {
+			o.handleEvent(temperature, pressure);
+		}
+	}
+
+}
+
+interface Observed {
+	void addObserver(Observer o);
+
+	void removeObserver(Observer o);
+
+	void notifyObservers();
+}
+
+interface Observer {
+	void handleEvent(int temp, int presser);
+}
 
 class ConsoleObserver implements Observer {
 
