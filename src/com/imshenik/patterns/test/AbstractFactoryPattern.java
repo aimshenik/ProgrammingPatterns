@@ -96,6 +96,8 @@ class AppleDynamics implements Dynamics {
 		}
 	}
 }
+
+
 //создаём фабрику, у которой есть 3 метода для получения каждого из "продуктов"
 interface AbstractFactory {
 	
